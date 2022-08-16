@@ -1,8 +1,9 @@
-package com.example.nasacustomapp
+package com.example.nasacustomapp.app
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.nasacustomapp.ui.main.view.MainFragment
+import com.example.nasacustomapp.R
+import com.example.nasacustomapp.view.startfragment.NasaFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -11,7 +12,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.container, MainFragment.newInstance())
+                .replace(R.id.container, NasaFragment.newInstance())
                 .commitNow()
         }
     }
