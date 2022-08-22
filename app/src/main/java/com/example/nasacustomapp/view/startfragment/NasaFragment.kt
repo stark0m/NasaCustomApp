@@ -9,7 +9,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.widget.LinearLayoutCompat
 import coil.load
 import com.example.nasacustomapp.R
 import com.example.nasacustomapp.databinding.FragmentMainBinding
@@ -19,6 +21,7 @@ import com.example.nasacustomapp.model.viewmodel.NasaViewModel
 import com.example.nasacustomapp.utils.AppUtils
 import com.example.nasacustomapp.utils.WIKI_PARSE_URL
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.button.MaterialButton
 
 class NasaFragment : Fragment() {
 
@@ -72,18 +75,26 @@ class NasaFragment : Fragment() {
         dialog.setContentView(R.layout.theme_choose_dialog)
         dialog.show()
 
-        val baseButton = dialog.findViewById<Button>(R.id.base_theme_button)
-        val customButton = dialog.findViewById<Button>(R.id.custom_theme_button)
 
-        baseButton!!.setOnClickListener {
-            viewModelNasaFragment.setApplicationTheme(AppTheme.LIGHT)
+        val dialogLayout: LinearLayoutCompat? =
+            dialog.findViewById<LinearLayoutCompat>(R.id.theme_choose_dialog_layout)
+
+        for (theme in AppTheme.values()) {
+
+            val button:MaterialButton = MaterialButton(requireContext())
+            button.text= theme.name
+            button.layoutParams =
+            LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+
+
+            button.setOnClickListener(){
+                viewModelNasaFragment.setApplicationTheme(theme)
+
         }
-        customButton!!.setOnClickListener {
-            viewModelNasaFragment.setApplicationTheme(AppTheme.CUSTOM)
-        }
+            dialogLayout!!.addView(button)
+
+            }
     }
-
-
 
 
     private fun doAction(responce: AppState) {
