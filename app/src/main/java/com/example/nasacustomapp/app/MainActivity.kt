@@ -12,7 +12,7 @@ import com.example.nasacustomapp.model.viewmodel.NasaViewModel
 import com.example.nasacustomapp.utils.APPLICATION_PREFS_THEME_FILE
 import com.example.nasacustomapp.utils.APP_THEME_TAG
 import com.example.nasacustomapp.utils.DEFAULT_THEME
-import com.example.nasacustomapp.view.startfragment.NasaFragment
+import com.example.nasacustomapp.view.NasaFragment
 
 class MainActivity : AppCompatActivity() {
 
