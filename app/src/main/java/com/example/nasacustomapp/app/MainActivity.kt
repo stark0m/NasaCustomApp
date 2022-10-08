@@ -40,7 +40,6 @@ class MainActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.container_main, NasaFragment.newInstance())
-//                .replace(R.id.container, NasaFragment.newInstance())
                 .commitNow()
         }
     }
@@ -51,6 +50,7 @@ class MainActivity : AppCompatActivity() {
 
             is AppState.ActiveTheme -> {
                 currentTheme = AppTheme.getTheme(appState.theme)
+
 
                 recreate()
             }

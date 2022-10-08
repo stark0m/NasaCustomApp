@@ -54,6 +54,9 @@ class NasaFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setNavigationMenuListener()
+        if (savedInstanceState==null){
+            showFragment(PhotoOfTheDayFragment.newInstance())
+        }
 
 
     }

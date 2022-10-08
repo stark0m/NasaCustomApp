@@ -36,5 +36,6 @@ class NasaViewModel(application: Application) : AndroidViewModel(application), V
 
     override fun setApplicationTheme(theme: AppTheme) {
         vmLiveData.value = AppState.ActiveTheme(theme)
+        vmLiveData.value =AppState.DoNothing
     }
 }
