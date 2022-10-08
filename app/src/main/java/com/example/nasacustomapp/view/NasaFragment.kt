@@ -30,9 +30,7 @@ class NasaFragment : Fragment() {
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModelNasaFragment: NasaViewModel by lazy {
-        ViewModelProvider(requireActivity()).get(NasaViewModel::class.java)
-    }
+
 
     companion object {
         fun newInstance() = NasaFragment()
@@ -68,11 +66,11 @@ class NasaFragment : Fragment() {
                     showFragment(PhotoOfTheDayFragment.newInstance()); true
                 }
                 R.id.action_view_settings -> {
-                    Toast.makeText(requireContext(), it.itemId, Toast.LENGTH_SHORT).show()
+
                     showFragment(SettingsFragment.newInstance()); true
                 }
                 R.id.action_view_wiki -> {
-                    Toast.makeText(requireContext(), it.itemId, Toast.LENGTH_SHORT).show()
+
                     showFragment(WikiFragment.newInstance()); true
                 }
                 else -> true

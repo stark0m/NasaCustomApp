@@ -51,6 +51,7 @@ class MainActivity : AppCompatActivity() {
 
             is AppState.ActiveTheme -> {
                 currentTheme = AppTheme.getTheme(appState.theme)
+
                 recreate()
             }
             else -> {

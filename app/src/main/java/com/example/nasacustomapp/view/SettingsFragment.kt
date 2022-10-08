@@ -5,29 +5,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import androidx.appcompat.widget.LinearLayoutCompat
+import androidx.lifecycle.ViewModelProvider
 import com.example.nasacustomapp.R
+import com.example.nasacustomapp.model.theme.AppTheme
+import com.example.nasacustomapp.model.viewmodel.NasaViewModel
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.button.MaterialButton
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [SettingsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class SettingsFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+    private val viewModelNasaFragment: NasaViewModel by lazy {
+        ViewModelProvider(requireActivity()).get(NasaViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -36,21 +26,43 @@ class SettingsFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_settings, container, false)
+
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment SettingsFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance() =
-            SettingsFragment().apply {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        showDialogAndSetListeners(view)
+    }
+    private fun showDialogAndSetListeners(view: View) {
+
+
+
+
+        val buttonsLayout: LinearLayoutCompat? =
+            view.findViewById<LinearLayoutCompat>(R.id.linear_layout_buttons)
+
+        for (theme in AppTheme.values()) {
+
+            val button: MaterialButton = MaterialButton(requireContext())
+            button.text = theme.name
+            button.layoutParams =
+                LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+                )
+
+
+            button.setOnClickListener() {
+                viewModelNasaFragment.setApplicationTheme(theme)
+
             }
+            buttonsLayout!!.addView(button)
+
+        }
+    }
+    companion object {
+
+        fun newInstance() =
+            SettingsFragment()
     }
 }

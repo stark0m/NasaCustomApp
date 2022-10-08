@@ -50,49 +50,11 @@ class PhotoOfTheDayFragment : Fragment() {
         viewModelNasaFragment.getObserver().observe(viewLifecycleOwner) { doAction(it) }
         viewModelNasaFragment.getData()
 
-        setListeners()
-    }
-    private fun setListeners() {
-
-        binding.inputLayout.setEndIconOnClickListener {
-            startActivity(Intent(Intent.ACTION_VIEW).apply {
-                data = Uri.parse("$WIKI_PARSE_URL${binding.inputEditText.text.toString()}")
-            })
-        }
-
-
-
 
     }
 
-    private fun showDialogAndSetListeners() {
-        val dialog = BottomSheetDialog(requireContext())
-        dialog.setContentView(R.layout.theme_choose_dialog)
-        dialog.show()
 
 
-        val dialogLayout: LinearLayoutCompat? =
-            dialog.findViewById<LinearLayoutCompat>(R.id.theme_choose_dialog_layout)
-
-        for (theme in AppTheme.values()) {
-
-            val button: MaterialButton = MaterialButton(requireContext())
-            button.text = theme.name
-            button.layoutParams =
-                LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT
-                )
-
-
-            button.setOnClickListener() {
-                viewModelNasaFragment.setApplicationTheme(theme)
-
-            }
-            dialogLayout!!.addView(button)
-
-        }
-    }
 
 
     private fun doAction(responce: AppState) {
