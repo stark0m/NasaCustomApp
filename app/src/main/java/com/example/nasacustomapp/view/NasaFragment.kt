@@ -9,6 +9,7 @@ import com.example.nasacustomapp.R
 import com.example.nasacustomapp.databinding.FragmentMainBinding
 import com.example.nasacustomapp.model.viewmodel.NasaViewModel
 import com.example.nasacustomapp.view.maincontent.PhotoOfTheDayFragment
+import com.example.nasacustomapp.view.maincontent.ViewPagerFragment
 
 class NasaFragment : Fragment() {
 
@@ -16,13 +17,11 @@ class NasaFragment : Fragment() {
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
 
-
-
-    companion object {
+   companion object {
         fun newInstance() = NasaFragment()
     }
 
-    private lateinit var viewModel: NasaViewModel
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,7 +40,7 @@ class NasaFragment : Fragment() {
 
         setNavigationMenuListener()
         if (savedInstanceState==null){
-            showFragment(PhotoOfTheDayFragment.newInstance())
+            showFragment(ViewPagerFragment())
         }
 
 
@@ -52,7 +51,7 @@ class NasaFragment : Fragment() {
 
             when (it.itemId) {
                 R.id.action_view_earth -> {
-                    showFragment(PhotoOfTheDayFragment.newInstance()); true
+                    showFragment(ViewPagerFragment.newInstance()); true
                 }
                 R.id.action_view_settings -> {
 
