@@ -1,17 +1,16 @@
 package com.example.nasacustomapp.view
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.appcompat.widget.LinearLayoutCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.nasacustomapp.R
 import com.example.nasacustomapp.model.theme.AppTheme
 import com.example.nasacustomapp.model.viewmodel.NasaViewModel
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.button.MaterialButton
 
 
@@ -24,20 +23,15 @@ class SettingsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_settings, container, false)
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         showDialogAndSetListeners(view)
     }
+
     private fun showDialogAndSetListeners(view: View) {
-
-
-
-
         val buttonsLayout: LinearLayoutCompat? =
             view.findViewById<LinearLayoutCompat>(R.id.linear_layout_buttons)
 
@@ -50,18 +44,15 @@ class SettingsFragment : Fragment() {
                     LinearLayout.LayoutParams.WRAP_CONTENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT
                 )
-
-
             button.setOnClickListener() {
                 viewModelNasaFragment.setApplicationTheme(theme)
 
             }
             buttonsLayout!!.addView(button)
-
         }
     }
-    companion object {
 
+    companion object {
         fun newInstance() =
             SettingsFragment()
     }

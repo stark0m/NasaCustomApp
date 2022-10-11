@@ -1,14 +1,12 @@
 package com.example.nasacustomapp.view
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.example.nasacustomapp.R
 import com.example.nasacustomapp.databinding.FragmentMainBinding
-import com.example.nasacustomapp.model.viewmodel.NasaViewModel
-import com.example.nasacustomapp.view.maincontent.PhotoOfTheDayFragment
 import com.example.nasacustomapp.view.maincontent.ViewPagerFragment
 
 class NasaFragment : Fragment() {
@@ -17,11 +15,9 @@ class NasaFragment : Fragment() {
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
 
-   companion object {
+    companion object {
         fun newInstance() = NasaFragment()
     }
-
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,16 +35,13 @@ class NasaFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setNavigationMenuListener()
-        if (savedInstanceState==null){
+        if (savedInstanceState == null) {
             showFragment(ViewPagerFragment())
         }
-
-
     }
 
     private fun setNavigationMenuListener() {
         binding.bottomNavigationView.setOnItemSelectedListener {
-
             when (it.itemId) {
                 R.id.action_view_earth -> {
                     showFragment(ViewPagerFragment.newInstance()); true
@@ -64,16 +57,12 @@ class NasaFragment : Fragment() {
                 else -> true
 
             }
-
-
         }
     }
-
 
 
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
-
     }
 }

@@ -2,8 +2,8 @@ package com.example.nasacustomapp.app
 
 import android.content.Context
 import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.nasacustomapp.R
 import com.example.nasacustomapp.model.theme.AppTheme

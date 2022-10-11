@@ -1,15 +1,10 @@
 package com.example.nasacustomapp.model.viewmodel
 
 import android.app.Application
-import android.content.Context
-import android.content.SharedPreferences
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.example.nasacustomapp.model.retrofit.PODRetrofitImpl
 import com.example.nasacustomapp.model.theme.AppTheme
-import com.example.nasacustomapp.utils.APPLICATION_PREFS_THEME_FILE
-import com.example.nasacustomapp.utils.APP_THEME_TAG
 
 class NasaViewModel(application: Application) : AndroidViewModel(application), VIewModelInterface {
     private val vmLiveData: MutableLiveData<AppState> = MutableLiveData<AppState>()

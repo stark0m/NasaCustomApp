@@ -1,11 +1,11 @@
 package com.example.nasacustomapp.view.maincontent
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import coil.load
 import com.example.nasacustomapp.R
@@ -22,11 +22,6 @@ class PhotoOfTheDayFragment : Fragment() {
         ViewModelProvider(requireActivity()).get(NasaViewModel::class.java)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,13 +35,7 @@ class PhotoOfTheDayFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModelNasaFragment.getObserver().observe(viewLifecycleOwner) { doAction(it) }
         viewModelNasaFragment.getData()
-
-
     }
-
-
-
-
 
     private fun doAction(responce: AppState) {
         when (responce) {
@@ -71,7 +60,7 @@ class PhotoOfTheDayFragment : Fragment() {
     }
 
     private fun showPODinFragment(responce: AppState.Success) {
-      val url = responce.serverResponce.url
+        val url = responce.serverResponce.url
 
         binding.imageView.load(url) {
             lifecycle(this@PhotoOfTheDayFragment)
@@ -86,15 +75,14 @@ class PhotoOfTheDayFragment : Fragment() {
 
             description.text = this.explanation
             title.text = this.title
-
         }
     }
-    companion object {
 
+    companion object {
         fun newInstance() =
             PhotoOfTheDayFragment()
-
     }
+
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
