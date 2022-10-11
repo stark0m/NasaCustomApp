@@ -12,7 +12,7 @@ import com.example.nasacustomapp.model.viewmodel.NasaViewModel
 import com.example.nasacustomapp.utils.APPLICATION_PREFS_THEME_FILE
 import com.example.nasacustomapp.utils.APP_THEME_TAG
 import com.example.nasacustomapp.utils.DEFAULT_THEME
-import com.example.nasacustomapp.view.startfragment.NasaFragment
+import com.example.nasacustomapp.view.NasaFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.container, NasaFragment.newInstance())
+                .replace(R.id.container_main, NasaFragment.newInstance())
                 .commitNow()
         }
     }
@@ -50,6 +50,8 @@ class MainActivity : AppCompatActivity() {
 
             is AppState.ActiveTheme -> {
                 currentTheme = AppTheme.getTheme(appState.theme)
+
+
                 recreate()
             }
             else -> {
