@@ -12,3 +12,5 @@ const val DEFAULT_THEME = R.style.Theme_NasaCustomApp
 const val CUSTOM_THEME = R.style.Theme_NasaCustomTheme
 const val INDIGO_THEME = R.style.IndigoTheme
 const val PINK_THEME = R.style.PinkTheme
+
+const val ANIMATION_LENGTH = 500L
