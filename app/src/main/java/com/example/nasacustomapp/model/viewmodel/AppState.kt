@@ -2,7 +2,6 @@ package com.example.nasacustomapp.model.viewmodel
 
 import com.example.nasacustomapp.model.nasadto.NasaDTO
 import com.example.nasacustomapp.model.theme.AppTheme
-import java.lang.Error
 
 sealed class AppState{
     data class Success(val serverResponce:NasaDTO):AppState()
