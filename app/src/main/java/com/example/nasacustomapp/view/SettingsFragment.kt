@@ -1,20 +1,25 @@
 package com.example.nasacustomapp.view
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.nasacustomapp.R
+import androidx.transition.*
+import com.example.nasacustomapp.databinding.FragmentSettingsBinding
 import com.example.nasacustomapp.model.theme.AppTheme
 import com.example.nasacustomapp.model.viewmodel.NasaViewModel
 import com.google.android.material.button.MaterialButton
 
 
 class SettingsFragment : Fragment() {
+    private var _binding: FragmentSettingsBinding? = null
+    private val binding get() = _binding!!
     private val viewModelNasaFragment: NasaViewModel by lazy {
         ViewModelProvider(requireActivity()).get(NasaViewModel::class.java)
     }
@@ -23,37 +28,58 @@ class SettingsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_settings, container, false)
+        _binding = FragmentSettingsBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        showDialogAndSetListeners(view)
+    override fun onResume() {
+        super.onResume()
+        generateAndShowThemeButtons()
     }
 
-    private fun showDialogAndSetListeners(view: View) {
-        val buttonsLayout: LinearLayoutCompat? =
-            view.findViewById<LinearLayoutCompat>(R.id.linear_layout_buttons)
+
+    private fun generateAndShowThemeButtons() {
 
         for (theme in AppTheme.values()) {
-
-            val button: MaterialButton = MaterialButton(requireContext())
-            button.text = theme.name
-            button.layoutParams =
-                LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT
-                )
-            button.setOnClickListener() {
-                viewModelNasaFragment.setApplicationTheme(theme)
-
+            val button: MaterialButton = MaterialButton(requireContext()).apply {
+                text = theme.name
+                visibility = View.GONE
+                layoutParams =
+                    LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT
+                    )
+                setOnClickListener() {
+                    viewModelNasaFragment.setApplicationTheme(theme)
+                }
             }
-            buttonsLayout!!.addView(button)
+            binding.linearLayoutButtons.addView(button)
+            Thread() { // не до конца разобрался в чем причина, если не запускать поток - анимация не отображается, работает только в таком варианте, хотя понимаю - это костыль
+                Handler(Looper.getMainLooper()).post {
+                    addLayoutAnimation()
+                    button.visibility = View.VISIBLE
+                }
+            }.start()
         }
+    }
+
+    private fun addLayoutAnimation() {
+        val myAutoTransition = TransitionSet()
+        myAutoTransition.ordering = TransitionSet.ORDERING_SEQUENTIAL
+        val fade = Slide(Gravity.END)
+        val changeBounds = ChangeBounds()
+        myAutoTransition.addTransition(changeBounds)
+        myAutoTransition.addTransition(fade)
+        TransitionManager.beginDelayedTransition(binding.linearLayoutButtons, myAutoTransition)
     }
 
     companion object {
         fun newInstance() =
             SettingsFragment()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }
