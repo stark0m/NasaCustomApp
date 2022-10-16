@@ -20,7 +20,6 @@ class CoordinatorFragment : Fragment() {
         return binding.root
     }
 
-
     companion object {
         fun newInstance() =
             CoordinatorFragment()

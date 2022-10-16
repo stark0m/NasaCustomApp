@@ -29,8 +29,13 @@ class ConstraintFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setRotationOnClickOneButton()
+    }
+
+    private fun setRotationOnClickOneButton() {
         binding.btnOne.setOnClickListener {
-            ObjectAnimator.ofFloat(it,View.ROTATION,0f,360f).setDuration(ANIMATION_LENGTH).start()
+            ObjectAnimator.ofFloat(it, View.ROTATION, 0f, 360f).setDuration(ANIMATION_LENGTH)
+                .start()
         }
     }
 

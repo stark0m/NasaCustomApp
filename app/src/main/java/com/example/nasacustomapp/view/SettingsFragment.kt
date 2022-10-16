@@ -39,7 +39,6 @@ class SettingsFragment : Fragment() {
 
 
     private fun generateAndShowThemeButtons() {
-
         for (theme in AppTheme.values()) {
             val button: MaterialButton = MaterialButton(requireContext()).apply {
                 text = theme.name
