@@ -28,7 +28,6 @@ class PODRetrofitImpl {
     }
 
     inner class PODInterceptor : Interceptor {
-
         @Throws(IOException::class)
         override fun intercept(chain: Interceptor.Chain): okhttp3.Response {
             return chain.proceed(chain.request())

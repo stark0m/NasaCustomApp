@@ -10,8 +10,6 @@ import com.example.nasacustomapp.databinding.FragmentMainBinding
 import com.example.nasacustomapp.view.maincontent.ViewPagerFragment
 
 class NasaFragment : Fragment() {
-
-
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
 
@@ -47,11 +45,9 @@ class NasaFragment : Fragment() {
                     showFragment(ViewPagerFragment.newInstance()); true
                 }
                 R.id.action_view_settings -> {
-
                     showFragment(SettingsFragment.newInstance()); true
                 }
                 R.id.action_view_wiki -> {
-
                     showFragment(WikiFragment.newInstance()); true
                 }
                 else -> true
@@ -59,7 +55,6 @@ class NasaFragment : Fragment() {
             }
         }
     }
-
 
     override fun onDestroy() {
         super.onDestroy()

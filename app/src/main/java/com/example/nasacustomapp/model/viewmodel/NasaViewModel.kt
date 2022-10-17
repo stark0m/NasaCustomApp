@@ -11,8 +11,6 @@ class NasaViewModel(application: Application) : AndroidViewModel(application), V
     private val retrofitPOD: PODRetrofitImpl by lazy { PODRetrofitImpl() }
     private val context = getApplication<Application>().applicationContext
 
-
-
     fun getObserver(): MutableLiveData<AppState> = vmLiveData
     override fun getData() {
 //        vmLiveData.value = AppState.ActiveTheme(AppTheme.CUSTOM)
