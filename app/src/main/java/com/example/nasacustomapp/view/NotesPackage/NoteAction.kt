@@ -7,5 +7,4 @@ interface NoteAction {
     fun removeNote(position: Int)
     fun moveUpNote(position: Int)
     fun moveDownNote(position: Int)
-
 }

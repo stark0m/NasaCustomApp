@@ -40,8 +40,6 @@ class RecyclerViewAdapter(
                 LongNoteViewHolder(binding)
             }
         }
-
-
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
@@ -57,7 +55,13 @@ class RecyclerViewAdapter(
             binding.textNote.text = note.noteText
             binding.descriptionNote.text = note.description
             binding.addItemImageView.setOnClickListener {
-                noteAction.addNote(Note("New Note Added","ANY VERY VERY LONG TEXT",NoteType.TEXT_LONG), position = layoutPosition)
+                noteAction.addNote(
+                    Note(
+                        "New Note Added",
+                        "ANY VERY VERY LONG TEXT",
+                        NoteType.TEXT_LONG
+                    ), position = layoutPosition
+                )
             }
             binding.removeItemImageView.setOnClickListener {
                 noteAction.removeNote(layoutPosition)
@@ -68,7 +72,6 @@ class RecyclerViewAdapter(
             binding.moveItemDown.setOnClickListener {
                 noteAction.moveDownNote(layoutPosition)
             }
-
         }
 
     }
@@ -89,8 +92,6 @@ class RecyclerViewAdapter(
                 notifyItemChanged(layoutPosition)
             }
         }
-
-
     }
 
     abstract class BaseViewHolder(view: View) :
@@ -107,9 +108,9 @@ class RecyclerViewAdapter(
 
     override fun onItemMove(fromPosition: Int, toPosition: Int) {
         listData.removeAt(fromPosition).apply {
-            listData.add(toPosition,this)
+            listData.add(toPosition, this)
         }
-        notifyItemMoved(fromPosition,toPosition)
+        notifyItemMoved(fromPosition, toPosition)
     }
 
     override fun onItemDismiss(position: Int) {

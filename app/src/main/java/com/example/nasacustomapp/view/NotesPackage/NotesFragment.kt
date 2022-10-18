@@ -41,7 +41,6 @@ class NotesFragment : Fragment() {
                 viewModelNasaFragment.removeNote(position)
                 viewModelNasaFragment.addNote(position+1,note)
             }
-
         }
     }
 
