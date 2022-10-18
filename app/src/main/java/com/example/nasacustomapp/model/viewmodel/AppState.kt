@@ -8,7 +8,7 @@ sealed class AppState{
     data class Success(val serverResponce:NasaDTO):AppState()
     data class Error (val error: Throwable):AppState()
     data class ActiveTheme(val theme: AppTheme):AppState()
-    data class NotesReceived(val noteList: List<Note>):AppState()
+    data class NotesReceived(val noteList: List<Pair<Note,Boolean>>):AppState()
     object DoNothing:AppState()
     object Loading:AppState()
 

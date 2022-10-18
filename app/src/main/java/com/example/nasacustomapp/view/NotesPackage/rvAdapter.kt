@@ -9,11 +9,11 @@ import com.example.nasacustomapp.databinding.SmallNoteLayoutBinding
 import com.example.nasacustomapp.utils.Note
 import com.example.nasacustomapp.utils.NoteType
 
-class rvAdapter(private val listData: List<Note>) :
+class rvAdapter(private val listData: MutableList<Pair<Note,Boolean>>) :
     RecyclerView.Adapter<rvAdapter.BaseViewHolder>() {
 
     override fun getItemViewType(position: Int): Int {
-        return listData[position].noteType
+        return listData[position].first.noteType
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         return when (viewType) {
@@ -32,12 +32,12 @@ class rvAdapter(private val listData: List<Note>) :
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
-        holder.bind(listData[position])
+        holder.bind(listData[position].first)
     }
 
     override fun getItemCount(): Int = listData.size
 
-    class SmallNoteViewHolder(val binding: SmallNoteLayoutBinding) :
+    inner class SmallNoteViewHolder(val binding: SmallNoteLayoutBinding) :
         BaseViewHolder(binding.root) {
 
         override fun bind(note: Note) {
@@ -47,12 +47,19 @@ class rvAdapter(private val listData: List<Note>) :
 
     }
 
-    class LargeNoteViewHolder(val binding: LongNoteLayoutBinding) :
+    inner class LargeNoteViewHolder(val binding: LongNoteLayoutBinding) :
         BaseViewHolder(binding.root) {
 
         override fun bind(note: Note) {
             binding.textNote.text = note.noteText
             binding.descriptionNote.text = note.description
+            binding.textNote.visibility = if(listData[layoutPosition].second) View.VISIBLE else View.GONE
+            binding.arrowId.setOnClickListener {
+                listData[layoutPosition] = listData[layoutPosition].let {
+                    it.first to !it.second
+                }
+                notifyItemChanged(layoutPosition)
+            }
         }
 
     }

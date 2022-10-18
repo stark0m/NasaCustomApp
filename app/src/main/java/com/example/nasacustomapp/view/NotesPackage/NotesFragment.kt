@@ -45,7 +45,7 @@ class NotesFragment : Fragment() {
             is AppState.NotesReceived -> {
                 val noteList = response.noteList
                 binding.recyclerViewId.layoutManager=LinearLayoutManager(requireContext())
-                binding.recyclerViewId.adapter = rvAdapter(noteList)
+                binding.recyclerViewId.adapter = rvAdapter(noteList.toMutableList())
 
             }
             else -> {
