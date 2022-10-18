@@ -43,6 +43,7 @@ class NotesFragment : Fragment() {
             is AppState.NotesReceived -> {
                 val noteList = response.noteList
                 binding.recyclerViewId.adapter = rvAdapter(noteList)
+
             }
             else -> {
                 //do nothing
