@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.nasacustomapp.databinding.FragmentNotesBinding
 import com.example.nasacustomapp.model.viewmodel.AppState
 import com.example.nasacustomapp.model.viewmodel.NasaViewModel
@@ -42,6 +44,7 @@ class NotesFragment : Fragment() {
         when (response) {
             is AppState.NotesReceived -> {
                 val noteList = response.noteList
+                binding.recyclerViewId.layoutManager=LinearLayoutManager(requireContext())
                 binding.recyclerViewId.adapter = rvAdapter(noteList)
 
             }
