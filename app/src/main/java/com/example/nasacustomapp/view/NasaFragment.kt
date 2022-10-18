@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.nasacustomapp.R
 import com.example.nasacustomapp.databinding.FragmentMainBinding
+import com.example.nasacustomapp.view.NotesPackage.NotesFragment
 import com.example.nasacustomapp.view.maincontent.ViewPagerFragment
 
 class NasaFragment : Fragment() {
@@ -34,13 +35,16 @@ class NasaFragment : Fragment() {
 
         setNavigationMenuListener()
         if (savedInstanceState == null) {
-            showFragment(ViewPagerFragment())
+            showFragment(NotesFragment.newInstance())
         }
     }
 
     private fun setNavigationMenuListener() {
         binding.bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
+                R.id.action_view_notes -> {
+                    showFragment(NotesFragment.newInstance()); true
+                }
                 R.id.action_view_earth -> {
                     showFragment(ViewPagerFragment.newInstance()); true
                 }

@@ -2,6 +2,7 @@ package com.example.nasacustomapp.view.maincontent
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.example.nasacustomapp.view.NotesPackage.NotesFragment
 
 class ContentViewPagerAdapterV2(fragment: Fragment) : FragmentStateAdapter(fragment) {
     private val fragments =
