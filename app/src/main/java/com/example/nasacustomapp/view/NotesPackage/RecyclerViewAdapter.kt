@@ -9,8 +9,8 @@ import com.example.nasacustomapp.databinding.SmallNoteLayoutBinding
 import com.example.nasacustomapp.utils.Note
 import com.example.nasacustomapp.utils.NoteType
 
-class rvAdapter(private var listData: MutableList<Pair<Note,Boolean>>, val noteAction:NoteAction) :
-    RecyclerView.Adapter<rvAdapter.BaseViewHolder>() {
+class RecyclerViewAdapter(private var listData: MutableList<Pair<Note,Boolean>>, val noteAction:NoteAction) :
+    RecyclerView.Adapter<RecyclerViewAdapter.BaseViewHolder>() {
 
     fun setNoteList(newListData: MutableList<Pair<Note,Boolean>>){
         listData=newListData
@@ -49,9 +49,17 @@ class rvAdapter(private var listData: MutableList<Pair<Note,Boolean>>, val noteA
             binding.textNote.text = note.noteText
             binding.descriptionNote.text = note.description
             binding.addItemImageView.setOnClickListener{
-                noteAction.addNote(Note("","",NoteType.TEXT_SHORT), position = layoutPosition)
+                noteAction.addNote(Note(), position = layoutPosition)
             }
-
+            binding.removeItemImageView.setOnClickListener{
+                noteAction.removeNote(layoutPosition)
+            }
+            binding.moveItemUp.setOnClickListener {
+                noteAction.moveUpNote(layoutPosition)
+            }
+            binding.moveItemDown.setOnClickListener{
+                noteAction.moveDownNote(layoutPosition)
+            }
 
         }
 

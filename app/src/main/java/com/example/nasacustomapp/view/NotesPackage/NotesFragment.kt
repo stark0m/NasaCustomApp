@@ -21,22 +21,33 @@ class NotesFragment : Fragment() {
         }
 
         override fun removeNote(position: Int) {
-            TODO()//  viewModelNasaFragment.removeNote(position)
+         viewModelNasaFragment.removeNote(position)
         }
 
         override fun moveUpNote(position: Int) {
-            TODO()// viewModelNasaFragment.moveUpNote(position)
+            val notesFromVM = viewModelNasaFragment.getNotesFromVM()
+            val note= notesFromVM.get(position).first
+            if (position>0){
+                viewModelNasaFragment.removeNote(position)
+                viewModelNasaFragment.addNote(position-1,note)
+            }
         }
 
         override fun moveDownNote(position: Int) {
-            TODO("Not yet implemented")
+            val notesFromVM = viewModelNasaFragment.getNotesFromVM()
+            val note= notesFromVM.get(position).first
+            if (position<notesFromVM.size-1){
+                viewModelNasaFragment.removeNote(position)
+                viewModelNasaFragment.addNote(position+1,note)
+            }
+
         }
     }
 
     private val viewModelNasaFragment: NasaViewModel by lazy {
         ViewModelProvider(requireActivity()).get(NasaViewModel::class.java)
     }
-    private lateinit var adapter: rvAdapter
+    private lateinit var adapter: RecyclerViewAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -62,7 +73,7 @@ class NotesFragment : Fragment() {
         when (response) {
             is AppState.NotesReceived -> {
                 val noteList = response.noteList
-                adapter = rvAdapter(noteList, noteActionCallback)
+                adapter = RecyclerViewAdapter(noteList, noteActionCallback)
                 binding.recyclerViewId.layoutManager = LinearLayoutManager(requireContext())
                 binding.recyclerViewId.adapter = adapter
             }
@@ -70,6 +81,10 @@ class NotesFragment : Fragment() {
                 adapter.setNoteList(viewModelNasaFragment.getNotesFromVM())
                 adapter.notifyItemInserted(response.position)
 
+            }
+            is AppState.NoteRemovedSuccess ->{
+                adapter.setNoteList(viewModelNasaFragment.getNotesFromVM())
+                adapter.notifyItemRemoved(response.position)
             }
             else -> {
                 //do nothing

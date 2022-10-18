@@ -49,4 +49,10 @@ class NasaViewModel(application: Application) : AndroidViewModel(application), V
         }
 
     }
+
+    fun removeNote(position: Int) {
+        if (repository.removeNote(position)) {
+            vmLiveData.value = AppState.NoteRemovedSuccess(position)
+        }
+    }
 }
