@@ -11,20 +11,31 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/text_note"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:text="@string/long_text"
+        android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@+id/description_note" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/arrow_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_keyboard_double_arrow_down_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_note" />
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:background="#000"
-        app:layout_constraintBottom_toBottomOf="@+id/text_note"
+        app:layout_constraintBottom_toBottomOf="@+id/arrow_id"
         app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
