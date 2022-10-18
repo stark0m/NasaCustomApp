@@ -1,3 +1,3 @@
 package com.example.nasacustomapp.utils
 
-data class Note(val description:String = "Description",val noteText:String="Any text", val noteType:Int = NoteType.TEXT_SHORT)
+data class Note(val description:String = "new Added note",val noteText:String="Any long text", val noteType:Int = NoteType.TEXT_LONG)

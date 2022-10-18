@@ -7,19 +7,36 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.nasacustomapp.databinding.FragmentNotesBinding
 import com.example.nasacustomapp.model.viewmodel.AppState
 import com.example.nasacustomapp.model.viewmodel.NasaViewModel
-import java.net.CacheResponse
+import com.example.nasacustomapp.utils.Note
 
 class NotesFragment : Fragment() {
     private var _binding: FragmentNotesBinding? = null
     private val binding get() = _binding!!
+    private val noteActionCallback = object : NoteAction {
+        override fun addNote(note: Note, position: Int) {
+            viewModelNasaFragment.addNote(position, Note())
+        }
+
+        override fun removeNote(position: Int) {
+            TODO()//  viewModelNasaFragment.removeNote(position)
+        }
+
+        override fun moveUpNote(position: Int) {
+            TODO()// viewModelNasaFragment.moveUpNote(position)
+        }
+
+        override fun moveDownNote(position: Int) {
+            TODO("Not yet implemented")
+        }
+    }
+
     private val viewModelNasaFragment: NasaViewModel by lazy {
         ViewModelProvider(requireActivity()).get(NasaViewModel::class.java)
     }
-
+    private lateinit var adapter: rvAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -36,6 +53,7 @@ class NotesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         viewModelNasaFragment.getObserver().observe(viewLifecycleOwner) { doAction(it) }
         viewModelNasaFragment.getNotesFromServer()
     }
@@ -44,8 +62,13 @@ class NotesFragment : Fragment() {
         when (response) {
             is AppState.NotesReceived -> {
                 val noteList = response.noteList
-                binding.recyclerViewId.layoutManager=LinearLayoutManager(requireContext())
-                binding.recyclerViewId.adapter = rvAdapter(noteList.toMutableList())
+                adapter = rvAdapter(noteList, noteActionCallback)
+                binding.recyclerViewId.layoutManager = LinearLayoutManager(requireContext())
+                binding.recyclerViewId.adapter = adapter
+            }
+            is AppState.NoteAddedSuccess -> {
+                adapter.setNoteList(viewModelNasaFragment.getNotesFromVM())
+                adapter.notifyItemInserted(response.position)
 
             }
             else -> {

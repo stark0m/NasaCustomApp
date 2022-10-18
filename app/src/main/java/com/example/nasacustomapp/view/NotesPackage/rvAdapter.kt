@@ -9,9 +9,12 @@ import com.example.nasacustomapp.databinding.SmallNoteLayoutBinding
 import com.example.nasacustomapp.utils.Note
 import com.example.nasacustomapp.utils.NoteType
 
-class rvAdapter(private val listData: MutableList<Pair<Note,Boolean>>) :
+class rvAdapter(private var listData: MutableList<Pair<Note,Boolean>>, val noteAction:NoteAction) :
     RecyclerView.Adapter<rvAdapter.BaseViewHolder>() {
 
+    fun setNoteList(newListData: MutableList<Pair<Note,Boolean>>){
+        listData=newListData
+    }
     override fun getItemViewType(position: Int): Int {
         return listData[position].first.noteType
     }
@@ -21,10 +24,12 @@ class rvAdapter(private val listData: MutableList<Pair<Note,Boolean>>) :
                 val binding = SmallNoteLayoutBinding.inflate(LayoutInflater.from(parent.context))
                 SmallNoteViewHolder(binding)
             }
-            else -> {
+            NoteType.TEXT_LONG -> {
                 val binding = LongNoteLayoutBinding.inflate(LayoutInflater.from(parent.context))
-                LargeNoteViewHolder(binding)
+                LongNoteViewHolder(binding)
             }
+            else -> {val binding = LongNoteLayoutBinding.inflate(LayoutInflater.from(parent.context))
+                LongNoteViewHolder(binding)}
         }
 
 
@@ -43,17 +48,23 @@ class rvAdapter(private val listData: MutableList<Pair<Note,Boolean>>) :
         override fun bind(note: Note) {
             binding.textNote.text = note.noteText
             binding.descriptionNote.text = note.description
+            binding.addItemImageView.setOnClickListener{
+                noteAction.addNote(Note("","",NoteType.TEXT_SHORT), position = layoutPosition)
+            }
+
+
         }
 
     }
 
-    inner class LargeNoteViewHolder(val binding: LongNoteLayoutBinding) :
+    inner class LongNoteViewHolder(val binding: LongNoteLayoutBinding) :
         BaseViewHolder(binding.root) {
 
         override fun bind(note: Note) {
             binding.textNote.text = note.noteText
             binding.descriptionNote.text = note.description
             binding.textNote.visibility = if(listData[layoutPosition].second) View.VISIBLE else View.GONE
+
             binding.arrowId.setOnClickListener {
                 listData[layoutPosition] = listData[layoutPosition].let {
                     it.first to !it.second
