@@ -106,12 +106,10 @@ class RecyclerViewAdapter(
     }
 
     override fun onItemMove(fromPosition: Int, toPosition: Int) {
-        if (fromPosition > 0) {
-            val note = listData.get(fromPosition).first
-            noteAction.removeNote(fromPosition)
-            noteAction.addNote(note, position = toPosition)
+        listData.removeAt(fromPosition).apply {
+            listData.add(toPosition,this)
         }
-
+        notifyItemMoved(fromPosition,toPosition)
     }
 
     override fun onItemDismiss(position: Int) {
