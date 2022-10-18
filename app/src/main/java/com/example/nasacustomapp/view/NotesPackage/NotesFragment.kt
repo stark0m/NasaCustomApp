@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.nasacustomapp.databinding.FragmentNotesBinding
 import com.example.nasacustomapp.model.viewmodel.AppState
@@ -17,7 +18,7 @@ class NotesFragment : Fragment() {
     private val binding get() = _binding!!
     private val noteActionCallback = object : NoteAction {
         override fun addNote(note: Note, position: Int) {
-            viewModelNasaFragment.addNote(position, Note())
+            viewModelNasaFragment.addNote(position, note)
         }
 
         override fun removeNote(position: Int) {
@@ -43,6 +44,7 @@ class NotesFragment : Fragment() {
 
         }
     }
+
 
     private val viewModelNasaFragment: NasaViewModel by lazy {
         ViewModelProvider(requireActivity()).get(NasaViewModel::class.java)
@@ -76,6 +78,7 @@ class NotesFragment : Fragment() {
                 adapter = RecyclerViewAdapter(noteList, noteActionCallback)
                 binding.recyclerViewId.layoutManager = LinearLayoutManager(requireContext())
                 binding.recyclerViewId.adapter = adapter
+                ItemTouchHelper(ItemTouchHelperCallback(adapter)).attachToRecyclerView(binding.recyclerViewId)
             }
             is AppState.NoteAddedSuccess -> {
                 adapter.setNoteList(viewModelNasaFragment.getNotesFromVM())
