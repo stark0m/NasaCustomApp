@@ -2,12 +2,14 @@ package com.example.nasacustomapp.view.maincontent
 
 import android.graphics.Color.blue
 import android.graphics.Color.red
+import android.graphics.Typeface
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
+import android.text.style.RelativeSizeSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +17,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.core.text.clearSpans
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.transition.ChangeBounds
@@ -98,6 +101,7 @@ class PhotoOfTheDayFragment : Fragment() {
 
         with(responce.serverResponce) {
             description = requireView().findViewById(R.id.bottomSheetDescription)
+            description.typeface = Typeface.createFromAsset(requireActivity().assets,"fonts/azret.ttf")
             val title: TextView = requireView().findViewById(R.id.title_text)
             title.text = this.title
 
@@ -128,11 +132,31 @@ class PhotoOfTheDayFragment : Fragment() {
         var colorNumber = currentCount
         for (i in 0 until description.text.length) {
             if (colorNumber == 5) colorNumber = 0 else colorNumber += 1
-            spannableRainbow.setSpan(
-                ForegroundColorSpan(map.getValue(colorNumber)),
-                i, i + 1,
-                Spannable.SPAN_EXCLUSIVE_INCLUSIVE
-            )
+
+            if(description.text[i]!='a'){
+                spannableRainbow.setSpan(
+                    ForegroundColorSpan(map.getValue(colorNumber)),
+                    i, i + 1,
+                    Spannable.SPAN_EXCLUSIVE_INCLUSIVE
+                )
+            } else
+            {
+                val span = spannableRainbow.getSpans(
+                    i,i+1,
+                    RelativeSizeSpan::class.java
+                )
+                span.forEach {
+                    spannableRainbow.removeSpan(it)
+                }
+
+                spannableRainbow.setSpan(
+                    RelativeSizeSpan(2f),
+                    i, i + 1,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+
+            }
+
         }
     }
 
