@@ -3,6 +3,11 @@ package com.example.nasacustomapp.view.maincontent
 import android.graphics.Color.blue
 import android.graphics.Color.red
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +23,7 @@ import androidx.transition.TransitionManager
 import androidx.transition.TransitionSet
 import coil.load
 import com.example.nasacustomapp.R
+import com.example.nasacustomapp.databinding.BottomSheetLayoutBinding
 import com.example.nasacustomapp.databinding.FragmentPhotoOfTheDayBinding
 import com.example.nasacustomapp.model.viewmodel.AppState
 import com.example.nasacustomapp.model.viewmodel.NasaViewModel
@@ -28,6 +34,8 @@ class PhotoOfTheDayFragment : Fragment() {
     private var _binding: FragmentPhotoOfTheDayBinding? = null
     private val binding get() = _binding!!
     private var isFlag = true
+    private lateinit var spannableRainbow: SpannableString
+    private lateinit var description: TextView
     private val viewModelNasaFragment: NasaViewModel by lazy {
         ViewModelProvider(requireActivity()).get(NasaViewModel::class.java)
     }
@@ -41,6 +49,7 @@ class PhotoOfTheDayFragment : Fragment() {
             5 to ContextCompat.getColor(requireContext(), R.color.purple_700)
         )
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -68,7 +77,6 @@ class PhotoOfTheDayFragment : Fragment() {
                     AppUtils.toast(requireContext(), "Ссылка пустая")
                 } else {
                     showPODinFragment(responce)
-
                 }
             }
             else -> {
@@ -89,14 +97,53 @@ class PhotoOfTheDayFragment : Fragment() {
         }
 
         with(responce.serverResponce) {
-            val description: TextView = requireView().findViewById(R.id.bottomSheetDescription)
+            description = requireView().findViewById(R.id.bottomSheetDescription)
             val title: TextView = requireView().findViewById(R.id.title_text)
+            title.text = this.title
 
             description.text = this.explanation
-            title.text = this.title
+            spannableRainbow = SpannableString(description.text)
+            rainbowText()
         }
-
         addPODAnimation()
+    }
+
+    private fun rainbowText() {
+        Thread() {
+            var currentCount = 1
+            while (true) {
+                Thread.sleep(500L)
+                Handler(Looper.getMainLooper()).post() {
+                    applyRainbowToText(currentCount)
+                }
+                currentCount = if (++currentCount > 5) 1 else currentCount
+            }
+        }.start()
+    }
+
+    private fun applyRainbowToText(currentCount: Int) {
+        description.setText(spannableRainbow, TextView.BufferType.SPANNABLE)
+        spannableRainbow = description.text as SpannableString
+        clearSpans()
+        var colorNumber = currentCount
+        for (i in 0 until description.text.length) {
+            if (colorNumber == 5) colorNumber = 0 else colorNumber += 1
+            spannableRainbow.setSpan(
+                ForegroundColorSpan(map.getValue(colorNumber)),
+                i, i + 1,
+                Spannable.SPAN_EXCLUSIVE_INCLUSIVE
+            )
+        }
+    }
+
+    private fun clearSpans() {
+        val spans = spannableRainbow.getSpans(
+            0, spannableRainbow.length,
+            ForegroundColorSpan::class.java
+        )
+        for (span in spans) {
+            spannableRainbow.removeSpan(span)
+        }
     }
 
     private fun addPODAnimation() {
@@ -131,6 +178,5 @@ class PhotoOfTheDayFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
-
     }
 }
