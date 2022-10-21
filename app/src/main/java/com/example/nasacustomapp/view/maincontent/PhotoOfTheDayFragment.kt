@@ -1,5 +1,7 @@
 package com.example.nasacustomapp.view.maincontent
 
+import android.graphics.Color.blue
+import android.graphics.Color.red
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.transition.ChangeBounds
@@ -28,7 +31,16 @@ class PhotoOfTheDayFragment : Fragment() {
     private val viewModelNasaFragment: NasaViewModel by lazy {
         ViewModelProvider(requireActivity()).get(NasaViewModel::class.java)
     }
-
+    private val map: Map<Int, Int> by lazy {
+        mapOf(
+            0 to ContextCompat.getColor(requireContext(), R.color.red),
+            1 to ContextCompat.getColor(requireContext(), R.color.orange),
+            2 to ContextCompat.getColor(requireContext(), R.color.yellow),
+            3 to ContextCompat.getColor(requireContext(), R.color.green),
+            4 to ContextCompat.getColor(requireContext(), R.color.blue),
+            5 to ContextCompat.getColor(requireContext(), R.color.purple_700)
+        )
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
