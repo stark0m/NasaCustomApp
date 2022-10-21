@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         getSharedPreferences(APPLICATION_PREFS_THEME_FILE, Context.MODE_PRIVATE)
     }
 
-    private var currentTheme:Int
+    private var currentTheme: Int
         set(value) {
             sharedPreferences.edit().putInt(APP_THEME_TAG, value).apply()
         }
@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         setTheme(currentTheme)
         setContentView(R.layout.activity_main)
 
-        viewModelNasaFragment.getObserver().observe(this){activityAction(it)}
+        viewModelNasaFragment.getObserver().observe(this) { activityAction(it) }
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
